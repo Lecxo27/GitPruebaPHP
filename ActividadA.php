@@ -1,44 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Aplicación de Entrada a Países</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('a.pais-link').click(function(e) {
-                e.preventDefault();
-                var pais = $(this).data('pais');
-                procesarPais(pais);
-            });
-
-            function procesarPais(pais) {
-                $.ajax({
-                    url: 'procesarA.php',
-                    method: 'GET',
-                    data: { pais: pais },
-                    success: function(response) {
-                        $('#resultado').html(response);
-                    },
-                    error: function() {
-                        $('#resultado').html('<h1>Error al procesar la solicitud.</h1>');
-                    }
-                });
-            }
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesar Entrada a País</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Aplicación de Entrada a Países</h1>
-
-    <div>
-        <h2>Seleccione el país que desea visitar:</h2>
-        <ul>
-            <li><a href="#" class="pais-link" data-pais="Mexico">México</a></li>
-            <li><a href="#" class="pais-link" data-pais="Estados Unidos">Estados Unidos</a></li>
-            <li><a href="#" class="pais-link" data-pais="Canada">Canadá</a></li>
-        </ul>
+    <div class="container">
+        <br><br>
+        <h1>Procesar Entrada a País</h1>
+        <hr><br>
+        <form action="procesarA.php" method="get">
+            <div class="form-group row">
+                <label for="pais" class="col-sm-2 col-4"><h4>Seleccione el país:</h4></label>
+                <div class="col-sm-6">
+                    <select name="pais" id="pais" class="form-control">
+                        <option value="Argentina">Argentina</option>
+                        <option value="España">España</option>
+                        <option value="Estados Unidos">Estados Unidos</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Japón">Japón</option>
+                        <option value="Alemania">Alemania</option>
+                        <option value="Reino Unido">Reino Unido</option>
+                    </select>
+                </div>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-primary">Procesar Entrada</button>
+            <a  class="btn btn-primary" href="index.php">Volver al Inicio</a>
+        </form>
     </div>
-
-    <div id="resultado"></div>
 </body>
 </html>

@@ -1,30 +1,74 @@
 <?php
-session_start();
+$pais = $_GET['pais'];
 
-$nombre = $_POST['nombre'];
-$monto = $_POST['monto'];
+// Obtener la hora actual del país seleccionado
+$timezone = getTimezone($pais);
+$hora_actual = getHoraActual($timezone);
 
-// Validar si el monto es válido
-if ($monto <= 3500) {
-    // Obtener el monto total actual
-    $monto_total = isset($_SESSION['monto_total']) ? $_SESSION['monto_total'] : 0;
+// Obtener el saludo en función de la hora actual
+$saludo = getSaludo($hora_actual);
 
-    // Verificar si el monto total supera el límite de 50,000Bs
-    if (($monto_total + $monto) <= 50000) {
-        // Incrementar el monto total y la cantidad de productos registrados
-        $_SESSION['monto_total'] = $monto_total + $monto;
-        $_SESSION['cantidad_productos'] = isset($_SESSION['cantidad_productos']) ? $_SESSION['cantidad_productos'] + 1 : 1;
+function getTimezone($pais) {
+    // Definir los diferentes husos horarios para cada país
+    $zonas_horarias = array(
+        'Argentina' => 'America/Argentina/Buenos_Aires',
+        'España' => 'Europe/Madrid',
+        'Estados Unidos' => 'America/New_York',
+        'Venezuela' => 'America/Caracas',
+        'Japón' => 'Asia/Tokyo',
+        'Alemania' => 'Europe/Berlin',
+        'Reino Unido' => 'Europe/London'
+    );
 
-        // Redirigir al formulario de registro con un mensaje de éxito
-        header("Location: index.php?success=1");
-        exit();
+    // Verificar si el país seleccionado tiene un huso horario asignado
+    if (isset($zonas_horarias[$pais])) {
+        return $zonas_horarias[$pais];
     } else {
-        // Redirigir al formulario de registro con un mensaje de error
-        header("Location: index.php?error=Limite de monto total alcanzado");
-        exit();
+        return 'UTC'; 
     }
-} else {
-    // Redirigir al formulario de registro con un mensaje de error
-    header("Location: index.php?error=Monto excede el límite permitido");
-    exit();
 }
+
+function getHoraActual($timezone) {
+    date_default_timezone_set($timezone);
+    return date('H:i:s');
+}
+
+function getSaludo($hora_actual) {
+    $hora_saludo = strtotime($hora_actual);
+    $saludo = '';
+
+    if ($hora_saludo >= strtotime('06:00:00') && $hora_saludo <= strtotime('11:59:59')) {
+        $saludo = '¡Buenos días!';
+    } elseif ($hora_saludo >= strtotime('12:00:00') && $hora_saludo <= strtotime('19:59:59')) {
+        $saludo = '¡Buenas tardes!';
+    } else {
+        $saludo = '¡Buenas noches!';
+    }
+
+    return $saludo;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <br><br>
+    <div class="container">
+        <h1>Saludo para <?php echo $pais; ?></h1>
+        <?php if ($saludo): ?>
+            <h2><?php echo $saludo; ?></h2>
+        <?php else: ?>
+            <h2>No se pudo determinar el saludo.</h2>
+        <?php endif; ?>
+        <hr><br>
+        <a  class="btn btn-primary" href="ActividadA.php">Volver al Menú</a>
+    </div>
+</body>
+</html>
