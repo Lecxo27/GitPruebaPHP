@@ -9,18 +9,23 @@
 </head>
 <body>
     <div class="container">
-    <h1>Hola B</h1><br>
-    <h1>Aplicación de Registro de Números</h1>
-    
-    <form action="procesar.php" method="post">
-        <label for="numero">Ingrese un número:</label>
-        <input type="number" name="numero" id="numero" required>
-        <br><br>
-        <input type="submit" value="Registrar número">
-    </form>
-
+        <h1>Hola B</h1><br>
+        <h1>Aplicación de Registro de Números</h1>
+        <div class="btn-group">
+            <label for="Regreso">Volver al Inicio  </label>
+            <a href="index.php" id="Regreso" class="btn btn-primary">Inicio</a>
+        </div>
+        <br><br><hr>
+        <form action="procesar.php" method="post">
+            <div class="mb-3">
+                <label for="numero" class="form-label">Ingrese un número:</label>
+                <input type="number" name="numero" id="numero" class="form-control" required>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-primary">Registrar número</button>
+        </form>
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
